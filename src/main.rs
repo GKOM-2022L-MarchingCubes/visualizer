@@ -22,9 +22,9 @@ fn main() {
         .init_resource::<MovementSettings>()
         .add_plugin(FlashlightPlugin)
         .add_plugin(ToggleWireframePlugin)
-        .add_plugin(VariableTransparencyPlugin)
+        //.add_plugin(VariableTransparencyPlugin)
         .add_plugin(ObjPlugin)
-        .add_plugin(WorldInspectorPlugin::new())
+        //.add_plugin(WorldInspectorPlugin::new())
         .add_startup_system(setup)
         .run();
 }
@@ -43,14 +43,14 @@ fn setup(
             }),
             ..Default::default()
         })
-        .insert(ToggleWireframe)
-        .insert(VariableTransparency);
+        .insert(ToggleWireframe);
+    //.insert(VariableTransparency);
     commands.spawn_bundle(PointLightBundle {
-        transform: Transform::from_translation(Vec3::new(5.0, 5.0, 5.0)),
+        transform: Transform::from_translation(Vec3::new(3.0, 3.0, 3.0)),
         ..Default::default()
     });
     commands.spawn_bundle(PointLightBundle {
-        transform: Transform::from_translation(Vec3::new(-5.0, -5.0, -5.0)),
+        transform: Transform::from_translation(Vec3::new(-3.0, -3.0, -3.0)),
         ..Default::default()
     });
     commands
