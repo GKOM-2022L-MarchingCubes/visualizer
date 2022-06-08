@@ -1,0 +1,18 @@
+[package]
+name = "visualizer"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+bevy = "0.7"
+bevy_obj = "*"
+bevy_flycam = "*"
+bevy-inspector-egui = "0.11"
+
+[profile.dev.package."*"]
+debug = false
+opt-level = 3
+debug-assertions = false
+overflow-checks = false
