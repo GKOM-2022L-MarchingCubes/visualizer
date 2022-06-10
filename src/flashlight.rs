@@ -34,6 +34,10 @@ fn update_flashlight(
                 info!("Enabled flashlight.");
                 entity.with_children(|b| {
                     b.spawn_bundle(PointLightBundle {
+                        point_light: PointLight {
+                            intensity: 100.0,
+                            ..Default::default()
+                        },
                         ..Default::default()
                     })
                     .insert(FlashlightLightSource);
