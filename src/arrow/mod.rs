@@ -16,15 +16,15 @@ fn setup(
 ) {
     let arrow_head = meshes.add(
         Cone {
-            radius: 0.5,
-            height: 1.0,
+            radius: 0.3,
+            height: 0.7,
             subdivisions: 16,
         }
         .into(),
     );
     let arrow_shaft = meshes.add(
         Capsule {
-            radius: 0.2,
+            radius: 0.1,
             rings: 4,
             depth: 3.0,
             latitudes: 4,
