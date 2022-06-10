@@ -1,12 +1,19 @@
 mod flashlight;
 mod transparency;
 mod wireframe;
+mod speed_controller;
 
-use bevy::{asset::AssetServerSettings, prelude::*};
+use bevy::{
+    asset::AssetServerSettings,
+    pbr::{NotShadowCaster, NotShadowReceiver},
+    prelude::*,
+    render::render_resource::Face,
+};
 use bevy_flycam::{FlyCam, MovementSettings, NoCameraPlayerPlugin};
 use bevy_inspector_egui::WorldInspectorPlugin;
 use bevy_obj::*;
 use flashlight::{FlashlightHolder, FlashlightPlugin};
+use speed_controller::SpeedController;
 use transparency::{VariableTransparency, VariableTransparencyPlugin};
 use wireframe::{ToggleWireframe, ToggleWireframePlugin};
 
@@ -22,7 +29,8 @@ fn main() {
         .init_resource::<MovementSettings>()
         .add_plugin(FlashlightPlugin)
         .add_plugin(ToggleWireframePlugin)
-        .add_plugin(VariableTransparencyPlugin)
+        //.add_plugin(VariableTransparencyPlugin)
+        .add_plugin(SpeedController)
         .add_plugin(ObjPlugin)
         .add_plugin(WorldInspectorPlugin::new())
         .add_startup_system(setup)
@@ -36,15 +44,15 @@ fn setup(
 ) {
     commands
         .spawn_bundle(PbrBundle {
-            mesh: asset_server.load("cube.obj"),
+            mesh: asset_server.load("mesh.obj"),
             material: materials.add(StandardMaterial {
-                base_color_texture: Some(asset_server.load("cube.png")),
+                base_color_texture: Some(asset_server.load("mesh.png")),
                 ..Default::default()
             }),
             ..Default::default()
         })
-        .insert(ToggleWireframe)
-        .insert(VariableTransparency);
+        //.insert(VariableTransparency)
+        .insert(ToggleWireframe);
     commands.spawn_bundle(PointLightBundle {
         transform: Transform::from_translation(Vec3::new(3.0, 3.0, 3.0)),
         ..Default::default()
@@ -61,5 +69,21 @@ fn setup(
         .insert(FlyCam)
         .insert(FlashlightHolder {
             ..Default::default()
-        });
+        })
+        /*.with_children(|b| {
+            b.spawn_bundle(PbrBundle {
+                mesh: asset_server.load("skybox.obj"),
+                material: materials.add(StandardMaterial {
+                    base_color_texture: Some(asset_server.load("skybox.png")),
+                    cull_mode: Some(Face::Front),
+                    unlit: true,
+                    ..Default::default()
+                }),
+                ..Default::default()
+            })
+            .insert(NotShadowCaster)
+            .insert(NotShadowReceiver)
+            .insert(ToggleWireframe)
+            .insert(VariableTransparency);
+        })*/;
 }

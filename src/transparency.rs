@@ -30,7 +30,8 @@ fn update_transparency(
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
     if keys.just_pressed(settings.kb_change) {
-        state.mode = (state.mode + 1) % settings.modes.len();
+        state.mode += 1;
+        state.mode %= settings.modes.len();
         let mode = settings.modes[state.mode];
         info!("Changed mode to {} transparency.", mode);
         for handle in entities.iter() {
