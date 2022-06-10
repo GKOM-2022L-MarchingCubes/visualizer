@@ -7,9 +7,8 @@ mod transparency;
 mod wireframe;
 
 use arrow::AxisArrowsPlugin;
-use bevy::{asset::AssetServerSettings, ecs::event::Events, prelude::*};
+use bevy::{asset::AssetServerSettings, prelude::*};
 use bevy_flycam::{FlyCam, MovementSettings, NoCameraPlayerPlugin};
-use bevy_inspector_egui::WorldInspectorPlugin;
 use bevy_obj::*;
 use flashlight::{FlashlightHolder, FlashlightPlugin};
 use lights::LightsPlugin;
@@ -47,11 +46,7 @@ struct Watcher(Handle<Mesh>, Handle<Image>);
 #[derive(Component)]
 struct Watched;
 
-fn setup(
-    mut commands: Commands,
-    asset_server: Res<AssetServer>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
-) {
+fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     asset_server.watch_for_changes().unwrap();
     let mesh = asset_server.load("mesh.obj");
     let image = asset_server.load("mesh.png");
@@ -85,7 +80,7 @@ fn update_assets(
             let h = match e {
                 AssetEvent::Created { handle: h } => h,
                 AssetEvent::Modified { handle: h } => h,
-                AssetEvent::Removed { handle: h } => continue,
+                _ => continue,
             };
             if h == &watcher.0 {
                 reload = true;
@@ -97,7 +92,7 @@ fn update_assets(
             let h = match e {
                 AssetEvent::Created { handle: h } => h,
                 AssetEvent::Modified { handle: h } => h,
-                AssetEvent::Removed { handle: h } => continue,
+                _ => continue,
             };
             if h == &watcher.1 {
                 reload = true;
