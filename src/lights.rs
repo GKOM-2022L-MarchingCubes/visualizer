@@ -1,7 +1,4 @@
-use bevy::{
-    prelude::{shape::Icosphere, *},
-    render::render_resource::Face,
-};
+use bevy::prelude::{shape::Icosphere, *};
 
 #[derive(Component)]
 struct LightCenter;
