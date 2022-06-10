@@ -33,7 +33,7 @@ fn main() {
         .add_plugin(ObjPlugin)
         .add_plugin(SkyboxPlugin)
         .add_plugin(LightsPlugin)
-        .add_plugin(WorldInspectorPlugin::new())
+        //.add_plugin(WorldInspectorPlugin::new())
         .add_startup_system(setup)
         .run();
 }
